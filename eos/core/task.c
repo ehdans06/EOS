@@ -107,7 +107,7 @@ int32u_t eos_resume_task(eos_tcb_t *task) {
 void eos_sleep(int32u_t tick) {
 	eos_tcb_t* cur_task = _os_current_task;
 	cur_task->state = WAITING;
-	int32u_t timeout = (tick == 0) eos_get_system_timer()->tick + cur_task->period : eos_get_system_timer()->tick + tick;
+	int32u_t timeout = (tick == 0) ? eos_get_system_timer()->tick + cur_task->period : eos_get_system_timer()->tick + tick;
 	eos_set_alarm(eos_get_system_timer(), cur_task->alarm, timeout, &_os_wakeup_sleeping_task, cur_task);
 	eos_schedule();
 }
