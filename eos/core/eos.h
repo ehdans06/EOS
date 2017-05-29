@@ -1,19 +1,19 @@
 /********************************************************
  * Filename: core/eos.h
- * 
+ *
  * Author: parkjy, RTOSLab. SNU.
- * 
- * Description: 
+ *
+ * Description:
  ********************************************************/
 #ifndef EOS_H
 #define EOS_H
 #include <core/eos_internal.h>
 
 /********************************************************
- * Define  
+ * Define
  ********************************************************/
 /*
- * wait queue type (semaphore, condition variable, message queue) 
+ * wait queue type (semaphore, condition variable, message queue)
  */
 #define FIFO 0
 #define PRIORITY 1
@@ -144,6 +144,9 @@ extern void eos_sleep(int32u_t tick);
  * The Semaphore structure
  */
 typedef struct eos_semaphore {
+	int32u_t count;
+	_os_node_t* wait_queue;
+	bool_t queue_type;
 } eos_semaphore_t;
 
 /*
@@ -204,7 +207,7 @@ extern void eos_ack_irq(int32u_t irq);
 
 /*
  * Enables global interrupt service.
- * Compared to the _os_interrupt_enable() function, 
+ * Compared to the _os_interrupt_enable() function,
  * this fuction always enables interrupt.
  */
 extern void eos_enable_interrupt(void);
@@ -232,13 +235,14 @@ extern void eos_disable_irq_line(int32u_t irq);
 
 
 /********************************************************
- * Message Queue Module 
+ * Message Queue Module
  ********************************************************/
 
 /*
  * The Message Queue structure
  */
 typedef struct eos_mqueue {
+	
 } eos_mqueue_t;
 
 /*
