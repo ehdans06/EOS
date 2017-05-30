@@ -58,7 +58,7 @@ int8u_t eos_receive_message(eos_mqueue_t *mq, void *message, int32s_t timeout)
 {
 	// wait
 	if (!eos_acquire_semaphore(&mq->getsem, timeout)) return;
-
+  PRINT("B");
 	// aliasing
 	int8u_t *front = (int8u_t *)mq->front;
 	int8u_t *msg = (int8u_t *)message;
