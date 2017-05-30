@@ -36,7 +36,7 @@ int32u_t eos_acquire_semaphore(eos_semaphore_t *sem, int32s_t timeout) {
 		while (1) {
 			// push current task into waiting queue, and yield a CPU
 			eos_tcb_t* cur_task = eos_get_current_task();
-			cur_task->state = WAITING;
+			cur_task->state = 3; // WAITING
 			if (sem->queue_type == FIFO) {
 				_os_add_node_tail(&(sem->wait_queue), &(cur_task->node));
 			}
@@ -49,7 +49,7 @@ int32u_t eos_acquire_semaphore(eos_semaphore_t *sem, int32s_t timeout) {
 			// after waking up, if the resource is available, return 1
 			eos_disable_interrupt();
 			if (sem->count > 0) {
-				count--;
+				sem->count--;
 				eos_enable_interrupt();
 				return 1;
 			}
