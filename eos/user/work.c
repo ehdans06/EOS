@@ -25,7 +25,7 @@ static void sender_task(void* arg) {
 	}
 }
 
-static void reciever_task1(void* arg) {
+static void receiver_task1(void* arg) {
 	int8u_t data[2];
 
 	while(1) {
@@ -36,7 +36,7 @@ static void reciever_task1(void* arg) {
 	}
 }
 
-static void reciever_task2(void* arg) {
+static void receiver_task2(void* arg) {
 	int8u_t data[2];
 
 	while(1) {
