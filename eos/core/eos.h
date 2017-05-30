@@ -146,7 +146,7 @@ extern void eos_sleep(int32u_t tick);
 typedef struct eos_semaphore {
 	int32u_t count;
 	_os_node_t* wait_queue;
-	bool_t queue_type;
+	int8u_t queue_type;
 } eos_semaphore_t;
 
 /*
