@@ -17,7 +17,7 @@ void eos_init_semaphore(eos_semaphore_t *sem, int32u_t initial_count, int8u_t qu
 
 #define INFINITY	0x7EEEEEEE
 int32u_t eos_acquire_semaphore(eos_semaphore_t *sem, int32s_t timeout) {
-
+	PRINT("B");
 	eos_disable_interrupt();
 
 	// if the resource is available, return 1
