@@ -10,7 +10,7 @@
 
 void eos_init_mqueue(eos_mqueue_t *mq, void *queue_start, int16u_t queue_size, int8u_t msg_size, int8u_t queue_type) {
   mq->queue_size = queue_size;
-  mq->msq_size = msq_size;
+  mq->msg_size = msg_size;
 
   // front always have its value, and rear always does not have its value
   // So, if the addresses of front & rear are equal, it means, the queue is empty
@@ -30,14 +30,14 @@ int8u_t eos_send_message(eos_mqueue_t *mq, void *message, int32s_t timeout) {
 
   int8u_t* msge = (int8u_t*)message;
 
-  for (int i = 0; i < mq->msq_size; i++) {
+  for (int i = 0; i < mq->msg_size; i++) {
     // send the message in the rear part of queue
     *(mq->rear) = msge[i];
 
     // if 'rear' points the end of the queue, make 'rear' point the start of the queue
     // if not, make 'rear' point the next entry of the queue
     if (mq->rear == (int8u_t*)mq->queue_start + mq->queue_size * mq->msg_size){
-      mq->rear = mq->start;
+      mq->rear = mq->queue_start;
     }
     else {
       mq->rear++;
@@ -56,12 +56,12 @@ int8u_t eos_receive_message(eos_mqueue_t *mq, void *message, int32s_t timeout) {
 
   for (int i =0; i < mq->msg_size; i++) {
     // get the message from the front part of queue
-    msge[i] = *(mq->front);
+    msge[i] = *((int8u_t*)(mq->front));
 
     // if 'front' points the end of the queue, make 'front' point the start of the queue
     // if not, make 'rear' point the next entry of the queue
     if (mq->front == (int8u_t*)mq->queue_start + mq->queue_size * mq->msg_size){
-      mq->front = mq->start;
+      mq->front = mq->queue_start;
     }
     else {
       mq->front++;
