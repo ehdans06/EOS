@@ -32,7 +32,7 @@ int8u_t eos_send_message(eos_mqueue_t *mq, void *message, int32s_t timeout) {
 
   for (int i = 0; i < mq->msg_size; i++) {
     // send the message in the rear part of queue
-    *(mq->rear) = msge[i];
+    *(int8u_t*)(mq->rear) = msge[i];
 
     // if 'rear' points the end of the queue, make 'rear' point the start of the queue
     // if not, make 'rear' point the next entry of the queue
