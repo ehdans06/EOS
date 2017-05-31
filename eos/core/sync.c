@@ -6,7 +6,8 @@
  * Description: semaphore, condition variable management.
  ********************************************************/
 #include <core/eos.h>
-
+#define INFINITY	0x7EEEEEEE
+extern int32u_t _eflags;
 
 void eos_init_semaphore(eos_semaphore_t *sem, int32u_t initial_count, int8u_t queue_type) {
 	/* initialization */
@@ -15,9 +16,7 @@ void eos_init_semaphore(eos_semaphore_t *sem, int32u_t initial_count, int8u_t qu
 	sem-> queue_type = queue_type;
 }
 
-#define INFINITY	0x7EEEEEEE
 int32u_t eos_acquire_semaphore(eos_semaphore_t *sem, int32s_t timeout) {
-	PRINT("B");
 	eos_disable_interrupt();
 
 	// if the resource is available, return 1
